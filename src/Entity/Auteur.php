@@ -3,23 +3,26 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Auteur
- *
+
  * @ORM\Table(name="auteur")
-
+ * @ApiResource()
+ * @ORM\Entity(repositoryClass="App\Repository\Auteur")
  */
-
-use ApiPlatform\Core\Annotation\ApiResource;
-/*
-    * @ApiResource()
-    * @ORM\Entity(repositoryClass="App\Repository\Auteur")
-    …
-   */
-
 class Auteur
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_auteur", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idAuteur;
+
     /**
      * @var string
      *
@@ -30,19 +33,36 @@ class Auteur
     /**
      * @var string
      *
-     * @ORM\Column(name="Prénom", type="string", length=255, nullable=false)
+     * @ORM\Column(name="Prenom", type="string", length=255, nullable=false)
      */
-    private $pr�nom;
+    private $prenom;
 
-    /**
-     * @var \Livres
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Livres")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_auteur", referencedColumnName="id_auteur")
-     * })
-     */
-    private $idAuteur;
+    public function getIdAuteur(): ?int
+    {
+        return $this->idAuteur;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
 }

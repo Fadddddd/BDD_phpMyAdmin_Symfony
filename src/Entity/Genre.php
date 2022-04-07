@@ -3,23 +3,27 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Genre
  *
  * @ORM\Table(name="genre", indexes={@ORM\Index(name="categorie_genre", columns={"categorie_genre"})})
-
+ 
+ * @ApiResource()
+ * @ORM\Entity(repositoryClass="App\Repository\Genre")
  */
-
-use ApiPlatform\Core\Annotation\ApiResource;
-/*
-    * @ApiResource()
-    * @ORM\Entity(repositoryClass="App\Repository\Genre")
-    …
-   */
-
 class Genre
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_genre", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idGenre;
+
     /**
      * @var string
      *
@@ -37,15 +41,32 @@ class Genre
      */
     private $categorieGenre;
 
-    /**
-     * @var \Livres
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Livres")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_genre", referencedColumnName="id_genre")
-     * })
-     */
-    private $idGenre;
+    public function getIdGenre(): ?int
+    {
+        return $this->idGenre;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategorieGenre(): ?Categorie
+    {
+        return $this->categorieGenre;
+    }
+
+    public function setCategorieGenre(?Categorie $categorieGenre): self
+    {
+        $this->categorieGenre = $categorieGenre;
+
+        return $this;
+    }
 }
